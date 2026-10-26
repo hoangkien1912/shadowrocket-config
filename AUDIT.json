@@ -1,0 +1,70 @@
+{
+  "date": "2026-10-26",
+  "method": "Direct browser raw-page inspection; not an application runtime test",
+  "original": [
+    {
+      "url": "https://github.com/sub-store-org/Sub-Store/releases/latest/download/sub-store-1.min.js",
+      "status": "Không xác minh được: trình duyệt chặn tải tài nguyên (ERR_BLOCKED_BY_CLIENT), không kết luận 404"
+    },
+    {
+      "url": "https://github.com/sub-store-org/Sub-Store/releases/latest/download/sub-store-0.min.js",
+      "status": "Không xác minh được: trình duyệt chặn tải tài nguyên (ERR_BLOCKED_BY_CLIENT), không kết luận 404"
+    },
+    {
+      "url": "https://github.com/sub-store-org/Sub-Store/releases/latest/download/cron-sync-artifacts.min.js",
+      "status": "Không xác minh được: trình duyệt chặn tải tài nguyên (ERR_BLOCKED_BY_CLIENT), không kết luận 404"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/duyvinh09/Module_IOS/refs/heads/main/js/youtube.response.js",
+      "status": "Trang raw trả về 404: Not Found"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/app2smile/rules/master/js/spotify-json.js",
+      "status": "Mở trực tiếp được nội dung JavaScript"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/app2smile/rules/master/js/spotify-proto.js",
+      "status": "Mở trực tiếp được nội dung JavaScript"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/duyvinh09/Module_IOS/refs/heads/main/js/SoundCloudGoPlus.js",
+      "status": "Trang raw trả về 404: Not Found"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/duyvinh09/Module_IOS/refs/heads/main/js/AlightMotion.js",
+      "status": "Trang raw trả về 404: Not Found"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/duyvinh09/Module_IOS/refs/heads/main/js/PicsArt.js",
+      "status": "Trang raw trả về 404: Not Found"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/duyvinh09/Module_IOS/refs/heads/main/js/WinkVipCrack.js",
+      "status": "Trang raw trả về 404: Not Found"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/duyvinh09/Module_IOS/refs/heads/main/js/TrueCaller.js",
+      "status": "Trang raw trả về 404: Not Found"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/duyvinh09/Module_IOS/refs/heads/main/js/Kinemaster.js",
+      "status": "Trang raw trả về 404: Not Found"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/duyvinh09/Module_IOS/refs/heads/main/js/camScanner.js",
+      "status": "Trang raw trả về 404: Not Found"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/duyvinh09/Module_IOS/refs/heads/main/js/BeautyPlus.js",
+      "status": "Trang raw trả về 404: Not Found"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/duyvinh09/Module_IOS/refs/heads/main/js/Locket_DuyVinh09.js",
+      "status": "Trang raw trả về 404: Not Found"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/duyvinh09/Module_IOS/refs/heads/main/js/deleteHeader.js",
+      "status": "Trang raw trả về 404: Not Found"
+    }
+  ]
+}
