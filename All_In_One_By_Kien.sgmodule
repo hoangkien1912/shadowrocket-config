@@ -1,12 +1,42 @@
-#!name=Kien - Core 4 Apps - 2026-10-26
-#!desc=YouTube, Locket, Spotify, SoundCloud. Script URLs checked; app behavior still requires device testing.
-# Sources: Maasea/sgmodule; vuong2023/shad (Ohoang7); app2smile/rules; Marol62926/MarScrpt.
+#!name=Kien - All In One Merged - 2026-10-26
+#!desc=Core apps + iSteal-it extra apps + hostsVN ad-block rules. Duplicates and conflicting scripts removed. Script URLs of the new apps are NOT verified; test on device.
+# Sources: Maasea/sgmodule; vuong2023/shad (Ohoang7); app2smile/rules; Marol62926/MarScrpt; NobyDa; ekaznyra; litieyin;
+#          iSteal-it/script; duyvinh09/Module_IOS; N9dev-dev/SL; bigdargon/hostsVN.
 # Use as a module. Disable other modules handling these same apps.
-# Do not enable together with All_In_One_Locket_Updated.sgmodule.
+# Do not enable together with All_In_One_Locket_Updated.sgmodule or any other RevenueCat module.
+# Do not ALSO import hostsVN-shadowrocket.conf as a config: its rules are already included below.
 # No proxy credentials, CA certificate, subscription node or cron task is included.
+# (hostsVN's public ca-p12 and the Sub-Store cron/scripts were intentionally left out.)
+
+[Rule]
+# Force YouTube off QUIC so the TCP/MITM scripts can run (from iSteal-it config).
+AND,((DOMAIN-SUFFIX,googlevideo.com),(PROTOCOL,UDP)),REJECT
+AND,((DOMAIN,youtubei.googleapis.com),(PROTOCOL,UDP)),REJECT
+# hostsVN (Vietnam ad/tracker blocking). Exceptions first, then reject lists.
+RULE-SET,https://raw.githubusercontent.com/bigdargon/hostsVN/master/option/hostsVN-surge-exceptions-rule.conf,DIRECT
+RULE-SET,https://raw.githubusercontent.com/bigdargon/hostsVN/master/option/hostsVN-surge-rule.conf,REJECT
+RULE-SET,https://raw.githubusercontent.com/bigdargon/hostsVN/master/option/hostsVN-surge-rewrite.conf,REJECT
+RULE-SET,https://raw.githubusercontent.com/bigdargon/hostsVN/master/extensions/threat/surge-rule.conf,REJECT
+#RULE-SET,https://raw.githubusercontent.com/bigdargon/hostsVN/master/option/hostsVN-surge-OTA.conf,REJECT
+#RULE-SET,https://raw.githubusercontent.com/bigdargon/hostsVN/master/option/hostsVN-surge-FB.conf,REJECT
+#RULE-SET,https://raw.githubusercontent.com/bigdargon/hostsVN/master/extensions/adult/surge-rule.conf,REJECT
+#RULE-SET,https://raw.githubusercontent.com/bigdargon/hostsVN/master/extensions/gambling/surge-rule.conf,REJECT
+IP-CIDR,0.0.0.0/32,REJECT,no-resolve
 
 [Header Rewrite]
 http-request ^https:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/user-customization-service\/v1\/customize$ header-del if-none-match
+
+[URL Rewrite]
+# YouTube ad blocking (from iSteal-it config, same set as Maasea's YouTube module).
+^https?:\/\/[\w-]+\.googlevideo\.com\/(?!(dclk_video_ads|videoplayback\?)).+&oad _ reject-200
+^https?:\/\/(www|s)\.youtube\.com\/api\/stats\/ads _ reject-200
+^https?:\/\/(www|s)\.youtube\.com\/(pagead|ptracking) _ reject-200
+^https?:\/\/s\.youtube\.com\/api\/stats\/qoe\?adcontext _ reject-200
+# ctier stripping: ONE rule only. hostsVN's simpler ctier rule was dropped because it would fight with this one.
+(^https?:\/\/[\w-]+\.googlevideo\.com\/(?!dclk_video_ads).+?)&ctier=L(&.+?),ctier,(.+) $1$2$3 302
+
+[Map Local]
+^https?:\/\/[\w-]+\.googlevideo\.com\/initplayback.+&oad data-type=text data="" status-code=200
 
 [Script]
 # YouTube: request and response use DIFFERENT upstream files.
@@ -37,7 +67,8 @@ picsart.response = type=http-response,pattern=^https:\/\/api\.(picsart|meiease)\
 camscanner.response = type=http-response,pattern=^https:\/\/(api|api-cs)\.intsig\.net\/purchase\/cs\/query_property\?,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/NobyDa/Script/master/Surge/JS/CamScanner.js
 
 # Wink: limit to the user VIP-info endpoint; do not rewrite every Meitu response.
-wink.response = type=http-response,pattern=^https:\/\/api-sub\.meitu\.com\/v2\/user\/vip_info(?:_by_group)?\.json(?:\?.*)?$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/ekaznyra/NguyenNgocAnhTu/master/Module/js/Wink.js
+# wink.response = type=http-response,pattern=^https:\/\/api-sub\.meitu\.com\/v2\/user\/vip_info(?:_by_group)?\.json(?:\?.*)?$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/ekaznyra/NguyenNgocAnhTu/master/Module/js/Wink.js
+wink.response = type=http-response,pattern=^https:\/\/api-sub\.meitu\.com\/v2\/user\/vip_info(?:_by_group)?\.json(?:\?.*)?$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/duyvinh09/Module_IOS/refs/heads/main/js/WinkVipCrack.js
 
 # Truecaller: exactly the two endpoint types handled by this source.
 truecaller.response = type=http-response,pattern=^https:\/\/premium-[^.]+\.truecaller\.com\/v\d+\/(subscriptions\/status|products\/apple)(?:\?.*)?$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/ekaznyra/NguyenNgocAnhTu/master/Module/js/TrueCaller.js
@@ -51,5 +82,45 @@ beautyplus.response = type=http-response,pattern=^https:\/\/api\.mr\.pixocial\.c
 # Lightroom: existing source; does not grant genuine Adobe cloud storage.
 lightroom.response = type=http-response,pattern=^https:\/\/photos\.adobe\.io\/v2\/accounts(?:[/?].*)?$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/litieyin/AD_VIP/main/Script/lightroom.js
 
+# ===================== NEW APPS (from iSteal-it / duyvinh09 config) =====================
+# Each has its own unique host/endpoint, so none overlaps with the apps above.
+# Script URLs were not reachable for verification when this file was built.
+
+# Alight Motion
+alightmotion.response = type=http-response,pattern=^https:\/\/us-central1-alight-creative\.cloudfunctions\.net\/getAccountStatusAndLicenses,requires-body=true,max-size=131072,timeout=10,script-path=https://raw.githubusercontent.com/iSteal-it/script/refs/heads/main/alight-motion.json
+
+# Sandbox Pixel Art (original pattern had no anchor and api.sandbox.love was missing from MITM; both fixed)
+sandboxpixelart.response = type=http-response,pattern=^https:\/\/api\.sandbox\.love\/accounts\/current,requires-body=true,max-size=131072,timeout=10,script-path=https://N9dev-dev.github.io/SL/scripts/SandBox.js
+
+# Funimate
+funimate.response = type=http-response,pattern=^https:\/\/api\.funimate\.com\/users\/me,requires-body=true,max-size=131072,timeout=10,script-path=https://raw.githubusercontent.com/iSteal-it/script/main/Funimate.json
+
+# djay
+djay.response = type=http-response,pattern=^https:\/\/app\.algoriddim\.com\/api\/v1\/validate-receipt,requires-body=true,max-size=131072,timeout=10,script-path=https://raw.githubusercontent.com/iSteal-it/script/main/djay.json
+
+# Vizmato
+vizmato.response = type=http-response,pattern=^https:\/\/web\.vizmato\.com\/itunesreceipt_v5\.php,requires-body=true,max-size=131072,timeout=10,script-path=https://raw.githubusercontent.com/iSteal-it/script/main/vizmato.json
+
+# Reface
+reface.response = type=http-response,pattern=^https:\/\/api\.reface\.video\/api\/reface\/v1\/iosSubscription,requires-body=true,max-size=131072,timeout=10,script-path=https://raw.githubusercontent.com/iSteal-it/script/main/reface.json
+
+# Busuu (upstream file is spelled bussu.json)
+busuu.response = type=http-response,pattern=^https:\/\/api\.busuu\.com\/users\/me,requires-body=true,max-size=131072,timeout=10,script-path=https://raw.githubusercontent.com/iSteal-it/script/main/bussu.json
+
+# Calm
+calm.response = type=http-response,pattern=^https:\/\/api\.calm\.com\/me$,requires-body=true,max-size=131072,timeout=10,script-path=https://raw.githubusercontent.com/iSteal-it/script/main/calm.json
+
+# Unfold
+unfold.response = type=http-response,pattern=^https:\/\/api\.unfold\.app\/v1\/ios\/receipts,requires-body=true,max-size=131072,timeout=10,script-path=https://raw.githubusercontent.com/iSteal-it/script/main/unfoldtest.json
+
+# Snow
+snow.response = type=http-response,pattern=^https?:\/\/user-snow-api\.snow\.me\/v\d\/purchase\/subscription\/subscriber\/status,requires-body=true,max-size=-1,timeout=60,script-path=https://raw.githubusercontent.com/duyvinh09/Module_IOS/refs/heads/main/js/Snow.js
+
+# Meitu Xiuxiu (host differs from Wink's api-sub.meitu.com, so no overlap)
+meituxiuxiu.response = type=http-response,pattern=^https?:\/\/(h5|api)\.xiuxiu\.meitu\.com\/v\d\/(h\d\/vip|vip|user)\/,requires-body=1,script-path=https://raw.githubusercontent.com/duyvinh09/Module_IOS/refs/heads/main/js/MeiTuXiuXiu.js
+
+# Itune
+itunes.response = type=http-response,pattern=^https?:\/\/buy\.itunes\.apple\.com\/verifyReceipt$,requires-body=true,max-size=-1,timeout=60,script-path=https://raw.githubusercontent.com/duyvinh09/Module_IOS/refs/heads/main/js/iTunes.js
+
 [MITM]
-hostname = %APPEND% *.googlevideo.com, youtubei.googleapis.com, api.revenuecat.com, spclient.wg.spotify.com, *spclient.spotify.com, api-mobile.soundcloud.com, api.picsart.com, api.picsart.cn, api.meiease.com, api.meiease.cn, api.intsig.net, api-cs.intsig.net, api-sub.meitu.com, premium*.truecaller.com, api-kinemaster-assetstore.nexstreaming.com, api-kinemaster-assetstore.kinemasters.com, api.mr.pixocial.com, photos.adobe.io
+hostname = %APPEND% -redirector*.googlevideo.com, *.googlevideo.com, youtubei.googleapis.com, www.youtube.com, s.youtube.com, www.googleapis.com, graph.nhaccuatui.com, api.revenuecat.com, spclient.wg.spotify.com, *spclient.spotify.com, api-mobile.soundcloud.com, api.picsart.com, api.picsart.cn, api.meiease.com, api.meiease.cn, api.intsig.net, api-cs.intsig.net, api-sub.meitu.com, premium*.truecaller.com, api-kinemaster-assetstore.nexstreaming.com, api-kinemaster-assetstore.kinemasters.com, api.mr.pixocial.com, photos.adobe.io, us-central1-alight-creative.cloudfunctions.net, api.sandbox.love, api.funimate.com, app.algoriddim.com, web.vizmato.com, api.reface.video, api.busuu.com, api.calm.com, api.unfold.app, user-snow-api.snow.me, h5.xiuxiu.meitu.com, api.xiuxiu.meitu.com, buy.itunes.apple.com
