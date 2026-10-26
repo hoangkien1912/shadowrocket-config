@@ -68,7 +68,10 @@ camscanner.response = type=http-response,pattern=^https:\/\/(api|api-cs)\.intsig
 
 # Wink: limit to the user VIP-info endpoint; do not rewrite every Meitu response.
 # wink.response = type=http-response,pattern=^https:\/\/api-sub\.meitu\.com\/v2\/user\/vip_info(?:_by_group)?\.json(?:\?.*)?$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/ekaznyra/NguyenNgocAnhTu/master/Module/js/Wink.js
-wink.response = type=http-response,pattern=^https:\/\/api-sub\.meitu\.com\/v2\/user\/vip_info(?:_by_group)?\.json(?:\?.*)?$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/duyvinh09/Module_IOS/refs/heads/main/js/WinkVipCrack.js
+WinkBlockConsume = type=http-request,pattern=^https?://.*meitu.com/(v2/function/user/consume|v1/virtual/account/record/consume).json,script-path=https://raw.githubusercontent.com/Hibandd122/Wink-Shadowrocket/main/wink_quota.js
+WinkMockCheck = type=http-response,pattern=^https?://.*meitu.com/v2/function/(user/check|strategy/free).json,requires-body=true,max-size=0,script-path=https://raw.githubusercontent.com/Hibandd122/Wink-Shadowrocket/main/wink_quota.js
+WinkMockEntrance = type=http-response,pattern=^https?://.*meitu.com/v2/entrance/products_by_function.json,requires-body=true,max-size=0,script-path=https://raw.githubusercontent.com/Hibandd122/Wink-Shadowrocket/main/wink_quota.js
+WinkMockVIP = type=http-response,pattern=^https?://.*meitu.com/v2/(user/vip_info|user/login_vip_check|user/login_limit_check|contract/sub/get_valid_contract|transaction/permission_check).json,requires-body=true,max-size=0,script-path=https://raw.githubusercontent.com/Hibandd122/Wink-Shadowrocket/main/wink_quota.js
 
 # Truecaller: exactly the two endpoint types handled by this source.
 truecaller.response = type=http-response,pattern=^https:\/\/premium-[^.]+\.truecaller\.com\/v\d+\/(subscriptions\/status|products\/apple)(?:\?.*)?$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/ekaznyra/NguyenNgocAnhTu/master/Module/js/TrueCaller.js
@@ -81,10 +84,6 @@ beautyplus.response = type=http-response,pattern=^https:\/\/api\.mr\.pixocial\.c
 
 # Lightroom: existing source; does not grant genuine Adobe cloud storage.
 lightroom.response = type=http-response,pattern=^https:\/\/photos\.adobe\.io\/v2\/accounts(?:[/?].*)?$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/litieyin/AD_VIP/main/Script/lightroom.js
-
-# ===================== NEW APPS (from iSteal-it / duyvinh09 config) =====================
-# Each has its own unique host/endpoint, so none overlaps with the apps above.
-# Script URLs were not reachable for verification when this file was built.
 
 # Alight Motion
 alightmotion.response = type=http-response,pattern=^https:\/\/us-central1-alight-creative\.cloudfunctions\.net\/getAccountStatusAndLicenses,requires-body=true,max-size=131072,timeout=10,script-path=https://raw.githubusercontent.com/iSteal-it/script/refs/heads/main/alight-motion.json
@@ -113,14 +112,5 @@ calm.response = type=http-response,pattern=^https:\/\/api\.calm\.com\/me$,requir
 # Unfold
 unfold.response = type=http-response,pattern=^https:\/\/api\.unfold\.app\/v1\/ios\/receipts,requires-body=true,max-size=131072,timeout=10,script-path=https://raw.githubusercontent.com/iSteal-it/script/main/unfoldtest.json
 
-# Snow
-snow.response = type=http-response,pattern=^https?:\/\/user-snow-api\.snow\.me\/v\d\/purchase\/subscription\/subscriber\/status,requires-body=true,max-size=-1,timeout=60,script-path=https://raw.githubusercontent.com/duyvinh09/Module_IOS/refs/heads/main/js/Snow.js
-
-# Meitu Xiuxiu (host differs from Wink's api-sub.meitu.com, so no overlap)
-meituxiuxiu.response = type=http-response,pattern=^https?:\/\/(h5|api)\.xiuxiu\.meitu\.com\/v\d\/(h\d\/vip|vip|user)\/,requires-body=1,script-path=https://raw.githubusercontent.com/duyvinh09/Module_IOS/refs/heads/main/js/MeiTuXiuXiu.js
-
-# Itune
-itunes.response = type=http-response,pattern=^https?:\/\/buy\.itunes\.apple\.com\/verifyReceipt$,requires-body=true,max-size=-1,timeout=60,script-path=https://raw.githubusercontent.com/duyvinh09/Module_IOS/refs/heads/main/js/iTunes.js
-
 [MITM]
-hostname = %APPEND% -redirector*.googlevideo.com, *.googlevideo.com, youtubei.googleapis.com, www.youtube.com, s.youtube.com, www.googleapis.com, graph.nhaccuatui.com, api.revenuecat.com, spclient.wg.spotify.com, *spclient.spotify.com, api-mobile.soundcloud.com, api.picsart.com, api.picsart.cn, api.meiease.com, api.meiease.cn, api.intsig.net, api-cs.intsig.net, api-sub.meitu.com, premium*.truecaller.com, api-kinemaster-assetstore.nexstreaming.com, api-kinemaster-assetstore.kinemasters.com, api.mr.pixocial.com, photos.adobe.io, us-central1-alight-creative.cloudfunctions.net, api.sandbox.love, api.funimate.com, app.algoriddim.com, web.vizmato.com, api.reface.video, api.busuu.com, api.calm.com, api.unfold.app, user-snow-api.snow.me, h5.xiuxiu.meitu.com, api.xiuxiu.meitu.com, buy.itunes.apple.com
+hostname = %APPEND% -redirector*.googlevideo.com, *.googlevideo.com, youtubei.googleapis.com, www.youtube.com, s.youtube.com, www.googleapis.com, graph.nhaccuatui.com, api.revenuecat.com, spclient.wg.spotify.com, *spclient.spotify.com, api-mobile.soundcloud.com, api.picsart.com, api.picsart.cn, api.meiease.com, api.meiease.cn, api.intsig.net, api-cs.intsig.net, api-sub.meitu.com, premium*.truecaller.com, api-kinemaster-assetstore.nexstreaming.com, api-kinemaster-assetstore.kinemasters.com, api.mr.pixocial.com, photos.adobe.io, us-central1-alight-creative.cloudfunctions.net, api.sandbox.love, api.funimate.com, app.algoriddim.com, web.vizmato.com, api.reface.video, api.busuu.com, api.calm.com, api.unfold.app, *.meitu.com
