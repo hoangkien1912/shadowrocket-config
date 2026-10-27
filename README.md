@@ -51,26 +51,6 @@ SoundCloud: nguồn Loon của tác giả ghi phiên bản cũ 5.174.0. Không h
 6. Chỉ cài Kien_Optional.sgmodule nếu cần app phụ, sau khi core đã ổn; không nhập lại bản All In One cũ cùng lúc.
 7. Nếu app lỗi, tắt module mới để đối chiếu. Không xóa cache/script cũ trước khi thử bản mới.
 
-## Kiểm tra thực tế cần bạn làm
-| App | Cần quan sát |
-|---|---|
-| YouTube | Phát vài video thường và Shorts; chuyển video; kiểm tra quảng cáo, nền/PiP nếu cần; ghi lại trường hợp đen màn hình hoặc quay vòng tải. |
-| Locket | Kiểm tra đúng tính năng Gold bạn đã dùng trước đây, không chỉ nhãn Gold. |
-| Spotify | Chọn một bài từ tìm kiếm và một bài trong playlist; kiểm tra phát thật, chuyển bài, quảng cáo và tình trạng tự đăng xuất. |
-| SoundCloud | Phát một bài thường và bài bị giới hạn; kiểm tra phát toàn bài thay vì chỉ nhãn Go+. |
-
-Ghi phiên bản iOS, Shadowrocket và từng ứng dụng. Nếu URL tải được nhưng tính năng lỗi, cần kiểm tra request có khớp rule và script có lỗi thực thi hay không.
-Không lấy nhãn Premium/Gold/Go+ làm bằng chứng đã có đủ quyền dịch vụ.
-
-## Đưa lên kho GitHub của bạn
-Tải Kien_Core4.sgmodule vào thư mục gốc của nhánh main trong hoangkien1912/shadowrocket-config.
-Link dự kiến SAU KHI tải lên:
-https://raw.githubusercontent.com/hoangkien1912/shadowrocket-config/main/Kien_Core4.sgmodule
-Module phụ tương tự:
-https://raw.githubusercontent.com/hoangkien1912/shadowrocket-config/main/Kien_Optional.sgmodule
-Các link này chưa được xuất bản bởi trợ lý trong lần làm này. File đã có trên repo trước đó chưa bị thay đổi.
-Script vẫn dùng nguồn upstream; nếu nguồn bị xóa sau này, module có thể lại lỗi tải.
-
 ## Nguồn chính
 - https://raw.githubusercontent.com/Maasea/sgmodule/master/YouTube.Enhance.sgmodule
 - https://raw.githubusercontent.com/vuong2023/shad/main/modules/Locket_ohb.sgmodule
