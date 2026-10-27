@@ -2,14 +2,12 @@
 Ngày kiểm tra: 26/10/2026 (Việt Nam).
 
 ## Kết quả và giới hạn
-Đã kiểm tra trực tiếp các trang raw bằng trình duyệt, không chỉ dựa vào kết quả tìm kiếm.
-Một số kết quả tìm kiếm vẫn có nội dung đã lưu của kho duyvinh09 dù khi mở trực tiếp trả về 404.
+Đã kiểm tra trực tiếp các trang raw bằng trình duyệt.
 “Tải được script” chỉ chứng minh mã còn được phục vụ. Chưa chạy trên iPhone/Shadowrocket hoặc xác nhận Premium thực tế.
 Không có cơ sở để gọi đây là bản “tất cả app đều hoạt động”. Đây là bản dựng để thử từ các nguồn còn truy cập được.
 
 ## Các tệp
-- Kien_Core4.sgmodule: YouTube/YouTube Music, Locket, Spotify, SoundCloud; 8 rule, 7 URL script duy nhất.
-- Kien_Optional.sgmodule: 7 app phụ, dùng thử riêng; không bắt buộc cài.
+- 4Core_By_Kien.sgmodule: YouTube/YouTube Music, Locket, Spotify, SoundCloud; 8 rule, 7 URL script duy nhất.
 - AUDIT.json: toàn bộ URL script gốc và kết quả kiểm tra.
 - README.md: hướng dẫn và nguồn.
 
